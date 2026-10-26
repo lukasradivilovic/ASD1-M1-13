@@ -1,0 +1,291 @@
+{
+  "seed": 2026,
+  "random1D": [
+    {
+      "n": 8,
+      "q": 1,
+      "naiveOps": 5,
+      "buildOps": 8,
+      "queryOps": 1,
+      "prefixTotal": 9,
+      "naiveMem": 1,
+      "prefixMem": 9,
+      "agree": true
+    },
+    {
+      "n": 8,
+      "q": 10,
+      "naiveOps": 30,
+      "buildOps": 8,
+      "queryOps": 10,
+      "prefixTotal": 18,
+      "naiveMem": 1,
+      "prefixMem": 9,
+      "agree": true
+    },
+    {
+      "n": 8,
+      "q": 100,
+      "naiveOps": 295,
+      "buildOps": 8,
+      "queryOps": 100,
+      "prefixTotal": 108,
+      "naiveMem": 1,
+      "prefixMem": 9,
+      "agree": true
+    },
+    {
+      "n": 32,
+      "q": 1,
+      "naiveOps": 8,
+      "buildOps": 32,
+      "queryOps": 1,
+      "prefixTotal": 33,
+      "naiveMem": 1,
+      "prefixMem": 33,
+      "agree": true
+    },
+    {
+      "n": 32,
+      "q": 10,
+      "naiveOps": 163,
+      "buildOps": 32,
+      "queryOps": 10,
+      "prefixTotal": 42,
+      "naiveMem": 1,
+      "prefixMem": 33,
+      "agree": true
+    },
+    {
+      "n": 32,
+      "q": 100,
+      "naiveOps": 1161,
+      "buildOps": 32,
+      "queryOps": 100,
+      "prefixTotal": 132,
+      "naiveMem": 1,
+      "prefixMem": 33,
+      "agree": true
+    },
+    {
+      "n": 64,
+      "q": 1,
+      "naiveOps": 42,
+      "buildOps": 64,
+      "queryOps": 1,
+      "prefixTotal": 65,
+      "naiveMem": 1,
+      "prefixMem": 65,
+      "agree": true
+    },
+    {
+      "n": 64,
+      "q": 10,
+      "naiveOps": 249,
+      "buildOps": 64,
+      "queryOps": 10,
+      "prefixTotal": 74,
+      "naiveMem": 1,
+      "prefixMem": 65,
+      "agree": true
+    },
+    {
+      "n": 64,
+      "q": 100,
+      "naiveOps": 2245,
+      "buildOps": 64,
+      "queryOps": 100,
+      "prefixTotal": 164,
+      "naiveMem": 1,
+      "prefixMem": 65,
+      "agree": true
+    }
+  ],
+  "worst1D": [
+    {
+      "n": 8,
+      "q": 1,
+      "naiveOps": 8,
+      "buildOps": 8,
+      "queryOps": 1,
+      "prefixTotal": 9,
+      "naiveMem": 1,
+      "prefixMem": 9,
+      "agree": true
+    },
+    {
+      "n": 8,
+      "q": 10,
+      "naiveOps": 80,
+      "buildOps": 8,
+      "queryOps": 10,
+      "prefixTotal": 18,
+      "naiveMem": 1,
+      "prefixMem": 9,
+      "agree": true
+    },
+    {
+      "n": 8,
+      "q": 100,
+      "naiveOps": 800,
+      "buildOps": 8,
+      "queryOps": 100,
+      "prefixTotal": 108,
+      "naiveMem": 1,
+      "prefixMem": 9,
+      "agree": true
+    },
+    {
+      "n": 32,
+      "q": 1,
+      "naiveOps": 32,
+      "buildOps": 32,
+      "queryOps": 1,
+      "prefixTotal": 33,
+      "naiveMem": 1,
+      "prefixMem": 33,
+      "agree": true
+    },
+    {
+      "n": 32,
+      "q": 10,
+      "naiveOps": 320,
+      "buildOps": 32,
+      "queryOps": 10,
+      "prefixTotal": 42,
+      "naiveMem": 1,
+      "prefixMem": 33,
+      "agree": true
+    },
+    {
+      "n": 32,
+      "q": 100,
+      "naiveOps": 3200,
+      "buildOps": 32,
+      "queryOps": 100,
+      "prefixTotal": 132,
+      "naiveMem": 1,
+      "prefixMem": 33,
+      "agree": true
+    },
+    {
+      "n": 64,
+      "q": 1,
+      "naiveOps": 64,
+      "buildOps": 64,
+      "queryOps": 1,
+      "prefixTotal": 65,
+      "naiveMem": 1,
+      "prefixMem": 65,
+      "agree": true
+    },
+    {
+      "n": 64,
+      "q": 10,
+      "naiveOps": 640,
+      "buildOps": 64,
+      "queryOps": 10,
+      "prefixTotal": 74,
+      "naiveMem": 1,
+      "prefixMem": 65,
+      "agree": true
+    },
+    {
+      "n": 64,
+      "q": 100,
+      "naiveOps": 6400,
+      "buildOps": 64,
+      "queryOps": 100,
+      "prefixTotal": 164,
+      "naiveMem": 1,
+      "prefixMem": 65,
+      "agree": true
+    }
+  ],
+  "matrix2D": [
+    {
+      "size": "3×3",
+      "variant": "losowy",
+      "rect": "[0,2)×[0,1)",
+      "set": "set(0,1,-11)",
+      "naiveOps": 2,
+      "buildOps": 27,
+      "updateOps": 27,
+      "queryOps": 3,
+      "prefixTotal": 57,
+      "prefixMem": 16,
+      "agree": true,
+      "result": -9
+    },
+    {
+      "size": "3×3",
+      "variant": "cała macierz",
+      "rect": "[0,3)×[0,3)",
+      "set": "set(0,1,-11)",
+      "naiveOps": 9,
+      "buildOps": 27,
+      "updateOps": 27,
+      "queryOps": 3,
+      "prefixTotal": 57,
+      "prefixMem": 16,
+      "agree": true,
+      "result": 4
+    },
+    {
+      "size": "6×6",
+      "variant": "losowy",
+      "rect": "[2,4)×[4,5)",
+      "set": "set(1,2,5)",
+      "naiveOps": 2,
+      "buildOps": 108,
+      "updateOps": 108,
+      "queryOps": 3,
+      "prefixTotal": 219,
+      "prefixMem": 49,
+      "agree": true,
+      "result": 9
+    },
+    {
+      "size": "6×6",
+      "variant": "cała macierz",
+      "rect": "[0,6)×[0,6)",
+      "set": "set(1,2,5)",
+      "naiveOps": 36,
+      "buildOps": 108,
+      "updateOps": 108,
+      "queryOps": 3,
+      "prefixTotal": 219,
+      "prefixMem": 49,
+      "agree": true,
+      "result": 16
+    },
+    {
+      "size": "10×10",
+      "variant": "losowy",
+      "rect": "[5,10)×[2,6)",
+      "set": "set(3,8,13)",
+      "naiveOps": 20,
+      "buildOps": 300,
+      "updateOps": 300,
+      "queryOps": 3,
+      "prefixTotal": 603,
+      "prefixMem": 121,
+      "agree": true,
+      "result": 5
+    },
+    {
+      "size": "10×10",
+      "variant": "cała macierz",
+      "rect": "[0,10)×[0,10)",
+      "set": "set(3,8,13)",
+      "naiveOps": 100,
+      "buildOps": 300,
+      "updateOps": 300,
+      "queryOps": 3,
+      "prefixTotal": 603,
+      "prefixMem": 121,
+      "agree": true,
+      "result": 48
+    }
+  ]
+}
