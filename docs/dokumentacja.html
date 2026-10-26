@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>ASD1-M1-13 — Dokumentacja — Lukaš Radivilovič</title>
+<style>
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+body{margin:0;font:10.4pt/1.45 "Segoe UI",Calibri,sans-serif;color:#1b2638}
+.page{width:210mm;height:297mm;padding:17mm 19mm 20mm;position:relative;overflow:hidden;page-break-after:always;break-after:page}
+.page:last-child{page-break-after:auto}
+.hdr{position:absolute;top:8mm;left:19mm;right:19mm;font-size:8pt;color:#68768c;border-bottom:.3mm solid #c9d3e3;padding-bottom:1.2mm;display:flex;justify-content:space-between}
+.ftr{position:absolute;bottom:9mm;left:19mm;right:19mm;font-size:8.5pt;color:#68768c;display:flex;justify-content:space-between;border-top:.3mm solid #c9d3e3;padding-top:1.2mm}
+h1{font-size:17pt;color:#1f4e8c;margin:2mm 0 3mm}
+h2{font-size:12pt;color:#1f4e8c;margin:4mm 0 1.5mm}
+p{margin:0 0 2.2mm;text-align:justify;hyphens:auto}
+ul,ol{margin:0 0 2.5mm;padding-left:6mm}
+li{margin:0 0 1mm}
+code,.mono{font-family:Consolas,monospace;font-size:9.4pt}
+pre{font:9pt/1.4 Consolas,monospace;background:#f1f5fb;border:.3mm solid #cbd6e6;border-radius:1.5mm;padding:2mm 3mm;margin:1mm 0 3mm;white-space:pre-wrap}
+table{border-collapse:collapse;width:100%;margin:1mm 0 1.5mm;font-size:9.2pt}
+th,td{border:.3mm solid #b8c6db;padding:1mm 2mm;vertical-align:top}
+th{background:#e3ebf7}
+td.r{text-align:right}
+.cap{font-size:8.8pt;color:#43536b;text-align:center;margin:0 0 3mm;font-style:italic}
+figure{margin:2mm 0 0;text-align:center}
+figure img{max-width:100%;border:.3mm solid #b8c6db}
+.small{font-size:8.6pt}
+.small td,.small th{padding:.6mm 1.5mm}
+/* strona tytułowa */
+.title{display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:22mm}
+.title .uni{font-size:12.5pt;line-height:1.5}
+.title .big{font-size:22pt;color:#1f4e8c;font-weight:700;margin:30mm 0 4mm;line-height:1.25}
+.title .code{font-size:14pt;margin-bottom:3mm}
+.title .app{font-size:12pt;color:#43536b;margin-bottom:40mm}
+.title table{width:120mm;font-size:11pt;margin:0 auto}
+.title td{border:none;border-bottom:.3mm solid #d3dceb;padding:2mm 3mm;text-align:left}
+.title td:first-child{color:#68768c;width:42mm}
+.title .place{margin-top:28mm;font-size:11pt}
+.arch{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3mm;margin:2mm 0 3mm;font-size:9pt}
+.arch div{border:.4mm solid #4f74ad;border-radius:2mm;padding:2mm;background:#f2f6fc}
+.arch b{display:block;color:#1f4e8c}
+.arch .w{grid-column:span 3;background:#fff8e6;border-color:#c69a2b}
+.flow{font-size:9.2pt;background:#f1f5fb;border:.3mm solid #cbd6e6;border-radius:1.5mm;padding:2mm 3mm;margin-bottom:3mm;text-align:center}
+.ok{color:#16613a;font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- ===================== 1 ===================== -->
+<section class="page">
+  <div class="title">
+    <div class="uni">Uniwersytet w Białymstoku<br>Filia w Wilnie<br>Wydział Ekonomiczno-Informatyczny · kierunek Informatyka</div>
+    <div class="big">Sumy prefiksowe<br>i zapytania na zakresach</div>
+    <div class="code">Mini-projekt M1 · temat ASD1-M1-13</div>
+    <div class="app">Aplikacja: <b>PrefiksLab</b> (HTML + CSS + JavaScript)</div>
+    <table>
+      <tr><td>Autor</td><td>Lukaš Radivilovič</td></tr>
+      <tr><td>Nr albumu</td><td>93795</td></tr>
+      <tr><td>Przedmiot</td><td>Algorytmy i struktury danych I</td></tr>
+      <tr><td>Rok akademicki</td><td>2026/2027, semestr I</td></tr>
+      <tr><td>Data oddania</td><td>26.10.2026</td></tr>
+      <tr><td>Repozytorium</td><td>GitHub, link w polu „Linki” w Dzienniku</td></tr>
+    </table>
+    <div class="place">Wilno 2026</div>
+  </div>
+  <div class="ftr"><span>ASD1-M1-13 · Lukaš Radivilovič</span><span>Strona 1 z 10</span></div>
+</section>
+
+<!-- ===================== 2 ===================== -->
+<section class="page">
+  <div class="hdr"><span>ASD1-M1-13 · Sumy prefiksowe i zapytania na zakresach</span><span>Dokumentacja</span></div>
+  <h1>1. Cel i zakres projektu</h1>
+  <h2>1.1. Problem</h2>
+  <p>Dostajemy tablicę liczb i wiele pytań o sumę jakiegoś fragmentu. Najprościej za każdym razem dodać elementy w pętli, ale wtedy każde pytanie kosztuje tyle, ile elementów ma zakres. Sumy prefiksowe odwracają to: płacimy raz za przygotowanie tablicy pomocniczej, a potem każde pytanie to jedno odejmowanie. To samo działa dla prostokątów w macierzy, tylko wzór jest trochę ciekawszy.</p>
+  <p>Chciałem zbudować laboratorium, w którym obie drogi da się obejrzeć krok po kroku na własnych danych i policzyć, ile naprawdę kosztują. Nie wystarczy napisać „O(1) zamiast O(n)”, bo dla krótkiej tablicy i jednego pytania przygotowanie wcale się nie opłaca. Aplikacja to pokazuje na liczbach.</p>
+  <h2>1.2. Odbiorca</h2>
+  <p>Student pierwszego roku, który zna pętle i tablice, ale nie spotkał się jeszcze z sumami prefiksowymi. Po pracy z aplikacją powinien umieć: zbudować P na kartce, policzyć sumę zakresu jako P[r] − P[l], wyjaśnić, dlaczego w 2D trzeba dodać z powrotem lewy-górny róg, i ocenić, kiedy przygotowanie się zwraca.</p>
+  <h2>1.3. Założenia (z karty tematu)</h2>
+  <ul>
+    <li>Tablica: 0–64 liczb całkowitych z przedziału −20…20. Macierz: 1–10 wierszy i 1–10 kolumn, te same wartości.</li>
+    <li>Indeksy od 0. Zakres [l, r) zawiera l, a nie zawiera r. Pusty zakres ma sumę 0. Prostokąt to [r1, r2) × [c1, c2).</li>
+    <li>Operacja set zastępuje wartość. Granice spoza danych i odwrócone zakresy są odrzucane z komunikatem.</li>
+    <li>Bez drzewa Fenwicka i bez gotowych bibliotek liczących sumy.</li>
+  </ul>
+  <h2>1.4. Wykonane wymagania</h2>
+  <table>
+    <tr><th style="width:62%">Wymaganie z karty</th><th>Gdzie w aplikacji</th><th>Stan</th></tr>
+    <tr><td>Sumowanie bez przygotowania (1D i 2D)</td><td>Laboratoria, metoda 1</td><td class="ok">zrobione</td></tr>
+    <tr><td>Sumy prefiksowe 1D z zerem na początku, suma [l, r) = P[r] − P[l]</td><td>Laboratorium 1D</td><td class="ok">zrobione</td></tr>
+    <tr><td>Sumy prefiksowe 2D z zerowym wierszem i kolumną, zapytanie z 4 pól</td><td>Laboratorium 2D</td><td class="ok">zrobione</td></tr>
+    <tr><td>set(i, x) i set(i, j, x) z odbudową sum</td><td>Laboratoria, metoda 3</td><td class="ok">zrobione</td></tr>
+    <tr><td>Dwa widoki z edycją danych i wyborem zakresu, oznaczone granice wł./wył.</td><td>Laboratorium 1D i 2D</td><td class="ok">zrobione</td></tr>
+    <tr><td>Krok, Start/Pauza, Reset, tempo; zmiana danych = nowy przebieg</td><td>pasek sterowania</td><td class="ok">zrobione</td></tr>
+    <tr><td>Stan, aktywne elementy, zmienne, wiersz pseudokodu, przyczyna kroku</td><td>Laboratoria</td><td class="ok">zrobione</td></tr>
+    <tr><td>Co najmniej 3 gotowe scenariusze (jest 6 + 6)</td><td>lista „Gotowy scenariusz”</td><td class="ok">zrobione</td></tr>
+    <tr><td>3 pytania z odpowiedzią i wyjaśnieniem, jedno o aktualnym stanie (jest 5)</td><td>Pytania, pole „Przewidź”</td><td class="ok">zrobione</td></tr>
+    <tr><td>Porównanie: n = 8, 32, 64; q = 1, 10, 100; macierze 3×3, 6×6, 10×10</td><td>Porównanie kosztu</td><td class="ok">zrobione</td></tr>
+    <tr><td>Co najmniej 8 testów, w tym 2 stany pośrednie (jest 24, w tym 4)</td><td>Testy, <span class="mono">node tests/run-tests.js</span></td><td class="ok">zrobione</td></tr>
+    <tr><td>Legenda i oznaczenia inne niż kolor (znaki +, −, =, ✗, ✎, ?, ×k, ramki)</td><td>pod wizualizacją</td><td class="ok">zrobione</td></tr>
+  </table>
+  <div class="ftr"><span>ASD1-M1-13 · Lukaš Radivilovič</span><span>Strona 2 z 10</span></div>
+</section>
+
+<!-- ===================== 3 ===================== -->
+<section class="page">
+  <div class="hdr"><span>ASD1-M1-13 · Sumy prefiksowe i zapytania na zakresach</span><span>Dokumentacja</span></div>
+  <h1>2. Algorytmy i mechanizmy</h1>
+  <h2>2.1. Sumowanie bez przygotowania</h2>
+  <p>Startuję od s = 0 i dla każdego i od l do r − 1 robię s = s + A[i]. W 2D są dwie zagnieżdżone pętle po wierszach r1…r2−1 i kolumnach c1…c2−1. Metoda nie potrzebuje żadnej pamięci poza s, a zmiana danych jest darmowa, bo nic nie trzeba aktualizować. Używam jej też jako punktu odniesienia: jeśli sumy prefiksowe dają inny wynik niż ta pętla, to błąd jest w prefiksach. W podręcznikach takie rozwiązanie nazywa się często algorytmem naiwnym; ja trzymam się nazwy z karty: metoda bezpośrednia.</p>
+  <h2>2.2. Sumy prefiksowe 1D</h2>
+<pre>build(A):  P[0] ← 0;  dla i = 0 … n−1:  P[i+1] ← P[i] + A[i]
+query(l, r):  jeśli nie (0 ≤ l ≤ r ≤ n) → błąd;  zwróć P[r] − P[l]</pre>
+  <p>P[k] to suma pierwszych k elementów, czyli A[0] + … + A[k−1]. Tablica P ma n + 1 pól, a P[0] = 0 odpowiada pustemu prefiksowi. Dzięki temu zerowemu polu wzór P[r] − P[l] działa także dla l = 0 i dla pustego zakresu (l = r daje 0) bez żadnych wyjątków w kodzie. Dla przykładu z karty A = [2, 1, 3, 4, 5] dostaję P = [0, 2, 3, 6, 10, 15], a sum(1, 4) = P[4] − P[1] = 10 − 2 = 8.</p>
+  <h2>2.3. Sumy prefiksowe 2D</h2>
+<pre>build2D(M):  P ← zera (R+1)×(C+1)
+  dla i, j:  P[i+1][j+1] ← M[i][j] + P[i][j+1] + P[i+1][j] − P[i][j]
+query2D(r1, r2, c1, c2):  zwróć P[r2][c2] − P[r1][c2] − P[r2][c1] + P[r1][c1]</pre>
+  <p>P[i][j] to suma prostokąta [0, i) × [0, j), czyli wszystkiego nad i na lewo od rogu (i, j). Przy budowie biorę prefiks z góry i prefiks z lewej. Oba zawierają wspólny obszar P[i][j], więc po dodaniu jest on liczony dwa razy i raz go odejmuję.</p>
+  <p>Przy zapytaniu jest odwrotnie. P[r2][c2] obejmuje za dużo: oprócz prostokąta także pas nad nim i pas na lewo od niego. Odejmuję oba pasy, ale lewy-górny róg [0, r1) × [0, c1) należy do każdego z nich, więc znika dwa razy. Muszę go raz dodać. W aplikacji widać to na polach macierzy jako licznik ×k: po trzecim kroku róg ma ×−1, po czwartym ×0, a pola prostokąta ×1. Dla przykładu z karty M = [[1,2,3],[4,5,6]] i prostokąta [0, 2) × [1, 3): 21 − 0 − 5 + 0 = 16.</p>
+  <h2>2.4. Zmiana danych: set</h2>
+  <p>set(i, x) wpisuje x do A[i]. Od tej chwili P[i+1], …, P[n] zawierają starą wartość, więc są złe. Klasa <span class="mono">PrefixArray</span> trzyma numer wersji danych i numer wersji, dla której zbudowano P. set zwiększa wersję i od razu odbudowuje P, a <span class="mono">sum()</span> sprawdza, czy wersje się zgadzają, i w przeciwnym razie rzuca wyjątek. W ten sposób nie da się przez pomyłkę użyć nieaktualnych sum. W 2D nieaktualne są pola P[a][b] dla a &gt; i oraz b &gt; j. W przykładzie z karty po set(2, 5) mam P = [0, 2, 3, 8, 12, 17] i sum(1, 4) = 10.</p>
+  <h2>2.5. Kiedy którą metodę stosować</h2>
+  <p>Metoda bezpośrednia, gdy zapytań jest mało albo dane zmieniają się prawie przy każdym zapytaniu. Prefiksy, gdy dane są stałe lub zmieniają się rzadko, a zapytań jest dużo. Prefiksy działają tylko dla operacji, które da się „cofnąć” (suma, XOR). Dla minimum czy maksimum sposób z odejmowaniem nie zadziała.</p>
+  <div class="ftr"><span>ASD1-M1-13 · Lukaš Radivilovič</span><span>Strona 3 z 10</span></div>
+</section>
+
+<!-- ===================== 4 ===================== -->
+<section class="page">
+  <div class="hdr"><span>ASD1-M1-13 · Sumy prefiksowe i zapytania na zakresach</span><span>Dokumentacja</span></div>
+  <h1>3. Struktury danych i złożoność</h1>
+  <h2>3.1. Reprezentacja</h2>
+  <p>Tablica A to zwykła tablica JavaScriptu (<span class="mono">number[]</span>), macierz M to tablica wierszy (<span class="mono">number[][]</span>), wszystkie wiersze tej samej długości. Tablica P ma długość n + 1. Macierz P ma wymiar (R + 1) × (C + 1), a jej wiersz 0 i kolumna 0 to zera. Wybrałem zwykłe tablice, bo dostęp po indeksie jest stały, a rozmiary są małe (najwyżej 65 lub 121 liczb). Wartości mieszczą się bezpiecznie w typie number: największa możliwa suma to 10 · 10 · 20 = 2000.</p>
+  <p>Klasy <span class="mono">PrefixArray</span> i <span class="mono">PrefixMatrix</span> trzymają razem dane, ich sumy prefiksowe i licznik operacji:</p>
+  <table>
+    <tr><th>Pole</th><th>Znaczenie</th></tr>
+    <tr><td class="mono">A / M</td><td>kopia danych użytkownika (konstruktor kopiuje, więc zmiany na zewnątrz nie psują P)</td></tr>
+    <tr><td class="mono">P</td><td>sumy prefiksowe 1D lub 2D</td></tr>
+    <tr><td class="mono">version, builtFor</td><td>wersja danych i wersja, dla której zbudowano P; różne wartości oznaczają nieaktualne P</td></tr>
+    <tr><td class="mono">cnt = {add, sub}</td><td>liczniki dodawań i odejmowań badanego algorytmu</td></tr>
+  </table>
+  <h2>3.2. Stan wykonania krokowego</h2>
+  <p>Każdy krok to obiekt migawki, który oddaje generator. Interfejs rysuje go i nic więcej nie wie o algorytmie.</p>
+  <table>
+    <tr><th>Pole migawki</th><th>Znaczenie</th></tr>
+    <tr><td class="mono">line</td><td>numer wiersza pseudokodu, który właśnie się wykonał</td></tr>
+    <tr><td class="mono">A, P, Pstale</td><td>kopie danych i sum (null = pole jeszcze niepoliczone), znacznik nieaktualnego P</td></tr>
+    <tr><td class="mono">hlA, hlP</td><td>aktywne pola z rodzajem (odczyt, zapis, +, −, nieaktualne, zmienione)</td></tr>
+    <tr><td class="mono">vars, ops</td><td>wartości zmiennych (i, P[i], s, …) i liczniki operacji tego przebiegu</td></tr>
+    <tr><td class="mono">coef</td><td>tylko zapytanie 2D: ile razy każde pole M jest w tej chwili wliczone do wyniku</td></tr>
+    <tr><td class="mono">reason, error, result</td><td>wyjaśnienie kroku po polsku, komunikat odrzucenia, wynik końcowy</td></tr>
+  </table>
+  <h2>3.3. Koszt czasowy i pamięciowy</h2>
+  <p>Koszt mierzę liczbą dodawań i odejmowań (add + sub). Porównania w pętlach, walidacja i animacja nie są liczone.</p>
+  <table>
+    <tr><th>Operacja</th><th>Dokładna liczba operacji</th><th>Czas</th><th>Pamięć dodatkowa</th></tr>
+    <tr><td>suma bezpośrednia [l, r)</td><td>r − l dodawań</td><td>O(n)</td><td>O(1)</td></tr>
+    <tr><td>budowa P 1D</td><td>n dodawań</td><td>O(n)</td><td>n + 1</td></tr>
+    <tr><td>zapytanie 1D</td><td>1 odejmowanie</td><td>O(1)</td><td>0</td></tr>
+    <tr><td>set 1D + odbudowa</td><td>n dodawań</td><td>O(n)</td><td>n + 1</td></tr>
+    <tr><td>suma bezpośrednia prostokąta</td><td>(r2 − r1)(c2 − c1) dodawań</td><td>O(R·C)</td><td>O(1)</td></tr>
+    <tr><td>budowa P 2D</td><td>2RC dodawań + RC odejmowań</td><td>O(R·C)</td><td>(R + 1)(C + 1)</td></tr>
+    <tr><td>zapytanie 2D</td><td>1 dodawanie + 2 odejmowania</td><td>O(1)</td><td>0</td></tr>
+    <tr><td>set 2D + odbudowa</td><td>3RC</td><td>O(R·C)</td><td>(R + 1)(C + 1)</td></tr>
+  </table>
+  <p>Dla q zapytań metoda bezpośrednia wykonuje najwyżej q·n operacji, a prefiksy n + q. Prefiksy wygrywają, gdy suma długości zapytań przekracza n + q.</p>
+  <div class="ftr"><span>ASD1-M1-13 · Lukaš Radivilovič</span><span>Strona 4 z 10</span></div>
+</section>
+
+<!-- ===================== 5 ===================== -->
+<section class="page">
+  <div class="hdr"><span>ASD1-M1-13 · Sumy prefiksowe i zapytania na zakresach</span><span>Dokumentacja</span></div>
+  <h1>4. Technologie</h1>
+  <h2>4.1. Język i narzędzia</h2>
+  <table>
+    <tr><th style="width:28%">Narzędzie</th><th>Do czego</th></tr>
+    <tr><td>HTML5 + CSS3</td><td>układ zakładek, siatki komórek tablicy i macierzy, legenda, wydruk</td></tr>
+    <tr><td>JavaScript (ES2020)</td><td>algorytmy, generatory kroków (<span class="mono">function*</span>), interfejs, wykres SVG</td></tr>
+    <tr><td>Node.js v26</td><td>uruchamianie testów i eksportu wyników z wiersza poleceń</td></tr>
+    <tr><td>Microsoft Edge (tryb headless)</td><td>zrzuty ekranu do dokumentacji i druk tej dokumentacji do PDF</td></tr>
+    <tr><td>Git + GitHub</td><td>historia zmian i oddanie kodu</td></tr>
+    <tr><td>python-pptx</td><td>złożenie pliku prezentacji</td></tr>
+  </table>
+  <h2>4.2. Dlaczego tak</h2>
+  <p>Karta poleca HTML + CSS + JavaScript i to faktycznie pasuje do tematu. Przeglądarka jest na każdym komputerze, więc na obronie wystarczy otworzyć jeden plik. Nie używam żadnej biblioteki interfejsu ani biblioteki do wykresów: komórki to zwykłe elementy <span class="mono">div</span> w siatce CSS, a wykres to kilka prostokątów SVG. Mniej rzeczy może się zepsuć i całość działa bez internetu.</p>
+  <p>Najważniejsza decyzja techniczna to generatory. Funkcja z <span class="mono">function*</span> wykonuje prawdziwy algorytm i po każdej ważnej instrukcji zatrzymuje się na <span class="mono">yield</span>, oddając migawkę stanu. Przycisk „Krok” wywołuje <span class="mono">next()</span>, czyli dosłownie wznawia kod do następnej instrukcji. Nie ma tu nagranej animacji ani ręcznie rozpisanych klatek, czego wymaga karta.</p>
+  <p>Pliki z algorytmami są napisane w formacie UMD: w przeglądarce rejestrują się jako zmienne globalne (<span class="mono">PS</span>, <span class="mono">Steps</span>, <span class="mono">Compare</span>), a w Node przez <span class="mono">module.exports</span>. Dzięki temu testy w terminalu i w zakładce „Testy” sprawdzają dokładnie ten sam kod, którego używa laboratorium.</p>
+  <h2>4.3. Uruchomienie lokalne</h2>
+<pre>Aplikacja:  otworzyć index.html w przeglądarce (dwuklik), bez instalacji
+Testy:      node tests/run-tests.js        → 24 testy, wynik w tests/wyniki-testow.json
+Porównanie: node tools/export-results.js   → docs/wyniki-porownania.json</pre>
+  <p>Aplikacja nie korzysta z sieci, płatnych API ani kont. Jedyny link zewnętrzny to źródło do nauki w zakładce „Teoria”. Parametry w adresie (np. <span class="mono">?tab=lab2&amp;sc2=1&amp;steps2=22</span>) pozwalają otworzyć konkretny scenariusz i przewinąć go o zadaną liczbę kroków. Tak robiłem zrzuty ekranu do tej dokumentacji, żeby pochodziły z prawdziwej aplikacji.</p>
+  <h2>4.4. Ograniczenia środowiska</h2>
+  <p>Aplikację sprawdzałem w przeglądarce Microsoft Edge na Windows 11; inne przeglądarki powinny działać, bo kod nie używa niczego niestandardowego, ale tego nie testowałem. Nie testowałem jej na telefonie; układ się zawija przy wąskim oknie, ale tablica 64 elementów wymaga wtedy przewijania w poziomie.</p>
+  <div class="ftr"><span>ASD1-M1-13 · Lukaš Radivilovič</span><span>Strona 5 z 10</span></div>
+</section>
+
+<!-- ===================== 6 ===================== -->
+<section class="page">
+  <div class="hdr"><span>ASD1-M1-13 · Sumy prefiksowe i zapytania na zakresach</span><span>Dokumentacja</span></div>
+  <h1>5. Architektura i realizacja</h1>
+  <h2>5.1. Moduły</h2>
+  <div class="arch">
+    <div><b>src/algorithms.js</b>badane algorytmy: naiveSum1D/2D, buildPrefix1D/2D, query1D/2D, PrefixArray, PrefixMatrix, walidacja, parsowanie, liczniki</div>
+    <div><b>src/steps.js</b>generatory kroków dla 6 trybów (3 w 1D, 3 w 2D) i teksty pseudokodu; do walidacji używa algorithms.js</div>
+    <div><b>src/compare.js</b>eksperymenty z karty, stałe ziarno losowania, liczniki osobno dla budowy, zapytań i aktualizacji</div>
+    <div><b>tests/test-cases.js</b>24 testy; korzysta z trzech modułów powyżej</div>
+    <div><b>tests/run-tests.js</b>uruchamia testy w Node i zapisuje wyniki</div>
+    <div><b>tools/</b>eksport wyników, skrypt zrzutów ekranu</div>
+    <div class="w"><b>src/app.js + index.html + style.css (interfejs)</b>klasa Player (Krok, Start/Pauza, Reset, tempo), rysowanie tablic i macierzy, pole „Przewidź”, zakładki Porównanie, Pytania i Testy. Nie liczy sum sama, tylko wyświetla to, co oddają moduły.</div>
+  </div>
+  <h2>5.2. Przepływ danych</h2>
+  <div class="flow">pole tekstowe → <b>parseArray / parseMatrix</b> (walidacja) → stan laboratorium → <b>generator</b> (Steps.prefix1d itd.) → migawka → <b>render</b> (komórki, pseudokod, zmienne, wyjaśnienie)</div>
+  <p>Każda zmiana danych, zakresu, metody albo wybór scenariusza wywołuje <span class="mono">Player.reset()</span>: tworzy nowy generator i pokazuje pierwszą migawkę. Stary przebieg jest porzucany, więc nie da się pomieszać kroków z różnych danych. Start uruchamia <span class="mono">setInterval</span> z opóźnieniem wybranym suwakiem (60–1600 ms na krok), Pauza go zatrzymuje. Ostatnia migawka ma znacznik <span class="mono">done</span> i kończy przebieg.</p>
+  <h2>5.3. Powiązanie obliczeń z wizualizacją</h2>
+  <p>Generator liczy wartości tym samym wzorem co funkcje z <span class="mono">algorithms.js</span>. Test T23 sprawdza, że wynik ostatniej migawki każdego z 6 trybów jest równy wynikowi zwykłej funkcji, a testy T17–T20 sprawdzają konkretne stany pośrednie (np. P = [0, 2, 3, 6, ?, ?] po trzech krokach budowy). Liczniki w migawkach dotyczą tylko obliczeń; kopiowanie tablic do migawek i rysowanie nie zwiększają ich. W porównaniu kosztu w ogóle nie używam generatorów, tylko czystych funkcji z licznikiem.</p>
+  <h2>5.4. Etapy pracy</h2>
+  <ol>
+    <li>Funkcje algorytmów i walidacja, sprawdzone na przykładzie kontrolnym z karty.</li>
+    <li>Generatory kroków i pseudokod; najpierw 1D, potem 2D ze współczynnikami ×k.</li>
+    <li>Testy automatyczne (najpierw przykłady z karty, potem przypadki brzegowe i walidacja).</li>
+    <li>Interfejs: dwa laboratoria, odtwarzacz, legenda i oznaczenia nie tylko kolorem.</li>
+    <li>Porównanie kosztu, pytania, zakładka Testy, a na końcu README, dokumentacja i slajdy.</li>
+  </ol>
+  <p>Historia commitów w repozytorium idzie mniej więcej w tej kolejności.</p>
+  <div class="ftr"><span>ASD1-M1-13 · Lukaš Radivilovič</span><span>Strona 6 z 10</span></div>
+</section>
+
+<!-- ===================== 7 ===================== -->
+<section class="page">
+  <div class="hdr"><span>ASD1-M1-13 · Sumy prefiksowe i zapytania na zakresach</span><span>Dokumentacja</span></div>
+  <h1>6. Interfejs i obsługa</h1>
+  <figure><img src="img/lab1_build.png" style="width:132mm"></figure>
+  <p class="cap">Rys. 1. Laboratorium 1D, przykład z karty, budowa P w trakcie: właśnie policzone P[4] = P[3] + A[3] = 10. Zakres [1, 4) ma przerywaną ramkę, granica r jest opisana jako wyłączona.</p>
+  <figure><img src="img/lab2_query.png" style="width:132mm"></figure>
+  <p class="cap">Rys. 2. Laboratorium 2D, scenariusz „Prostokąt w środku”, zapytanie po obu odejmowaniach. Lewy-górny róg ma ×−1, bo odjęto go dwa razy.</p>
+  <p>Po lewej stronie jest panel danych: gotowy scenariusz, pole na własną tablicę lub macierz (przycisk „Zastosuj” albo Enter), „Losuj”, wybór metody oraz granice zakresu z dopiskami „włącznie” i „wyłącznie”. Dla metody set pojawiają się pola i, x (w 2D i, j, x). Błędne dane, np. 21 albo nierówne wiersze macierzy, dają komunikat pod panelem i nie zmieniają poprzednich danych.</p>
+  <p>Nad wizualizacją są przyciski Krok, Start/Pauza, Reset i suwak tempa. Pod spodem: pole „Dlaczego ten krok” z wyjaśnieniem i liczbami, pseudokod z podświetlonym i oznaczonym strzałką ▶ wierszem, tabela zmiennych z licznikami add i sub, a także pole „Przewidź”, które pyta o następny prefiks albo wynik zapytania. Każde wyróżnienie ma też znak (+, −, =, ✗, ✎, ?), więc da się z niego korzystać bez rozróżniania kolorów.</p>
+  <div class="ftr"><span>ASD1-M1-13 · Lukaš Radivilovič</span><span>Strona 7 z 10</span></div>
+</section>
+
+<!-- ===================== 8 ===================== -->
+<section class="page">
+  <div class="hdr"><span>ASD1-M1-13 · Sumy prefiksowe i zapytania na zakresach</span><span>Dokumentacja</span></div>
+  <h1>7. Porównanie metod</h1>
+  <p>Dla każdej długości n generuję jedną losową tablicę (ziarno 2026), a potem q losowych zapytań [l, r). Obie metody dostają dokładnie te same zapytania. Koszt to add + sub; przy prefiksach budowę podaję osobno i razem z zapytaniami. W każdym wierszu wyniki obu metod były identyczne.</p>
+  <table class="small">
+    <tr><th>n</th><th>q</th><th>Bezpośrednio</th><th>Budowa P</th><th>Zapytania P</th><th>Prefiksy razem</th><th>Bezpośrednio, najgorszy przypadek (cała tablica)</th><th>Taniej</th></tr>
+    <tr><td class="r">8</td><td class="r">1</td><td class="r"><b>5</b></td><td class="r">8</td><td class="r">1</td><td class="r">9</td><td class="r">8</td><td>bezpośrednio</td></tr>
+    <tr><td class="r">8</td><td class="r">10</td><td class="r">30</td><td class="r">8</td><td class="r">10</td><td class="r"><b>18</b></td><td class="r">80</td><td>prefiksy</td></tr>
+    <tr><td class="r">8</td><td class="r">100</td><td class="r">295</td><td class="r">8</td><td class="r">100</td><td class="r"><b>108</b></td><td class="r">800</td><td>prefiksy</td></tr>
+    <tr><td class="r">32</td><td class="r">1</td><td class="r"><b>8</b></td><td class="r">32</td><td class="r">1</td><td class="r">33</td><td class="r">32</td><td>bezpośrednio</td></tr>
+    <tr><td class="r">32</td><td class="r">10</td><td class="r">163</td><td class="r">32</td><td class="r">10</td><td class="r"><b>42</b></td><td class="r">320</td><td>prefiksy</td></tr>
+    <tr><td class="r">32</td><td class="r">100</td><td class="r">1161</td><td class="r">32</td><td class="r">100</td><td class="r"><b>132</b></td><td class="r">3200</td><td>prefiksy</td></tr>
+    <tr><td class="r">64</td><td class="r">1</td><td class="r"><b>42</b></td><td class="r">64</td><td class="r">1</td><td class="r">65</td><td class="r">64</td><td>bezpośrednio</td></tr>
+    <tr><td class="r">64</td><td class="r">10</td><td class="r">249</td><td class="r">64</td><td class="r">10</td><td class="r"><b>74</b></td><td class="r">640</td><td>prefiksy</td></tr>
+    <tr><td class="r">64</td><td class="r">100</td><td class="r">2245</td><td class="r">64</td><td class="r">100</td><td class="r"><b>164</b></td><td class="r">6400</td><td>prefiksy</td></tr>
+  </table>
+  <p class="cap">Tabela 1. Liczba dodawań i odejmowań dla tablic. Dane z zakładki „Porównanie kosztu” i z <span class="mono">docs/wyniki-porownania.json</span>.</p>
+  <p>Macierze: budowa, jedna zmiana set i jedno zapytanie. Metoda bezpośrednia nie płaci nic za set, tylko przegląda pola prostokąta. Sumy prefiksowe budują P na początku i drugi raz po zmianie.</p>
+  <table class="small">
+    <tr><th>Macierz</th><th>Prostokąt</th><th>Zmiana</th><th>Bezpośrednio</th><th>Budowa</th><th>Odbudowa po set</th><th>Zapytanie</th><th>Prefiksy razem</th><th>Pamięć P</th></tr>
+    <tr><td>3×3</td><td>[0,2)×[0,1)</td><td>set(0,1,−11)</td><td class="r">2</td><td class="r">27</td><td class="r">27</td><td class="r">3</td><td class="r">57</td><td class="r">16</td></tr>
+    <tr><td>3×3</td><td>cała</td><td>set(0,1,−11)</td><td class="r">9</td><td class="r">27</td><td class="r">27</td><td class="r">3</td><td class="r">57</td><td class="r">16</td></tr>
+    <tr><td>6×6</td><td>[2,4)×[4,5)</td><td>set(1,2,5)</td><td class="r">2</td><td class="r">108</td><td class="r">108</td><td class="r">3</td><td class="r">219</td><td class="r">49</td></tr>
+    <tr><td>6×6</td><td>cała</td><td>set(1,2,5)</td><td class="r">36</td><td class="r">108</td><td class="r">108</td><td class="r">3</td><td class="r">219</td><td class="r">49</td></tr>
+    <tr><td>10×10</td><td>[5,10)×[2,6)</td><td>set(3,8,13)</td><td class="r">20</td><td class="r">300</td><td class="r">300</td><td class="r">3</td><td class="r">603</td><td class="r">121</td></tr>
+    <tr><td>10×10</td><td>cała</td><td>set(3,8,13)</td><td class="r">100</td><td class="r">300</td><td class="r">300</td><td class="r">3</td><td class="r">603</td><td class="r">121</td></tr>
+  </table>
+  <p class="cap">Tabela 2. Macierze: jedna zmiana i jedno zapytanie (ziarno 2026).</p>
+  <h2>Interpretacja</h2>
+  <p>Przy jednym zapytaniu sumy prefiksowe zawsze przegrywały i inaczej być nie może: budowa i zapytanie to razem n + 1 operacji, a zapytanie bezpośrednie ma najwyżej n dodawań (dla zapytania o całą tablicę różnica wynosi tylko 1). Już przy 10 zapytaniach wygrywały we wszystkich trzech rozmiarach. Dla n = 64 i q = 100 różnica to 2245 do 164, czyli prawie 14 razy mniej operacji, a w najgorszym przypadku 6400 do 164.</p>
+  <p>Wynik dla macierzy mnie na początku zaskoczył, ale jest logiczny: przy jednej zmianie i jednym zapytaniu prefiksy płacą dwie budowy po 3RC, a zyskują tylko na jednym zapytaniu. Nawet zapytanie o całą macierz 10×10 (100 dodawań) jest tańsze niż 603 operacje prefiksów. Prefiksy mają sens dopiero wtedy, gdy po każdej zmianie przychodzi wiele zapytań.</p>
+  <div class="ftr"><span>ASD1-M1-13 · Lukaš Radivilovič</span><span>Strona 8 z 10</span></div>
+</section>
+
+<!-- ===================== 9 ===================== -->
+<section class="page">
+  <div class="hdr"><span>ASD1-M1-13 · Sumy prefiksowe i zapytania na zakresach</span><span>Dokumentacja</span></div>
+  <h1>8. Testowanie</h1>
+  <p>Testy uruchamiam poleceniem <span class="mono">node tests/run-tests.js</span> albo przyciskiem w zakładce „Testy”. Każdy test ma wejście, oczekiwany wynik (porównywany jako tekst JSON), wynik uzyskany i status. Ostatnie uruchomienie: <b>24 z 24 zaliczonych</b>. Wartości oczekiwane pochodzą z przykładu kontrolnego w karcie albo z ręcznych obliczeń, nie z wyniku programu.</p>
+  <table class="small">
+    <tr><th>ID</th><th>Co sprawdza</th><th>Wejście (skrót)</th><th>Oczekiwane</th><th>Status</th></tr>
+    <tr><td>T01</td><td>budowa P (karta)</td><td>[2,1,3,4,5]</td><td>[0,2,3,6,10,15]</td><td class="ok">OK</td></tr>
+    <tr><td>T02</td><td>sum(1,4) obiema metodami</td><td>[2,1,3,4,5]</td><td>8 i 8</td><td class="ok">OK</td></tr>
+    <tr><td>T03</td><td>set(2,5), potem sum(1,4)</td><td>[2,1,3,4,5]</td><td>P=[0,2,3,8,12,17], 10</td><td class="ok">OK</td></tr>
+    <tr><td>T04</td><td>prostokąt z karty, obie metody</td><td>[[1,2,3],[4,5,6]], [0,2)×[1,3)</td><td>16 i 16</td><td class="ok">OK</td></tr>
+    <tr><td>T05</td><td>macierz P z karty</td><td>[[1,2,3],[4,5,6]]</td><td>[[0,0,0,0],[0,1,3,6],[0,5,12,21]]</td><td class="ok">OK</td></tr>
+    <tr><td>T06</td><td>pusta tablica</td><td>[], [0,0)</td><td>P=[0], suma 0</td><td class="ok">OK</td></tr>
+    <tr><td>T07</td><td>pusty zakres i cała tablica</td><td>[3,3), [0,5)</td><td>0, 15</td><td class="ok">OK</td></tr>
+    <tr><td>T08</td><td>liczby ujemne, suma 0</td><td>[−5,5,−20,20,−1]</td><td>0, −20, −15</td><td class="ok">OK</td></tr>
+    <tr><td>T09</td><td>zmiana pierwszego i ostatniego</td><td>[1,2,3,4], set(0,−20), set(3,20)</td><td>5, −20, 20</td><td class="ok">OK</td></tr>
+    <tr><td>T10</td><td>macierz 1×1, pusty prostokąt</td><td>[[7]]</td><td>7, 0, 0</td><td class="ok">OK</td></tr>
+    <tr><td>T11</td><td>pojedynczy wiersz, cały prostokąt</td><td>[[1,−2,3,−4]]</td><td>1, −2</td><td class="ok">OK</td></tr>
+    <tr><td>T12</td><td>set w rogach macierzy</td><td>[[1,2],[3,4]]</td><td>11, −4, 11</td><td class="ok">OK</td></tr>
+    <tr><td>T13</td><td>błędne granice 1D</td><td>[3,1), [−1,2), [0,6), [1.5,3)</td><td>4× ValidationError</td><td class="ok">OK</td></tr>
+    <tr><td>T14</td><td>błędne granice 2D</td><td>odwrócone, za duże, bezpośrednia</td><td>4× ValidationError</td><td class="ok">OK</td></tr>
+    <tr><td>T15</td><td>błędne dane i set</td><td>21, 65 el., 11 wierszy, …</td><td>6× ValidationError</td><td class="ok">OK</td></tr>
+    <tr><td>T16</td><td>odrzucony set nie psuje danych</td><td>[1,2,3], set(3,9)</td><td>błąd, suma 6</td><td class="ok">OK</td></tr>
+    <tr><td>T17</td><td><b>stan pośredni</b>: budowa 1D po 3 krokach</td><td>[2,1,3,4,5]</td><td>[0,2,3,6,?,?]</td><td class="ok">OK</td></tr>
+    <tr><td>T18</td><td><b>stan pośredni</b>: budowa 2D po 1. wierszu</td><td>[[1,2,3],[4,5,6]]</td><td>wiersz 1 = [0,1,3,6], wiersz 2 = ?</td><td class="ok">OK</td></tr>
+    <tr><td>T19</td><td><b>stan pośredni</b>: współczynniki ×k</td><td>3×3, [1,3)×[1,3)</td><td>róg −1, prostokąt 1</td><td class="ok">OK</td></tr>
+    <tr><td>T20</td><td><b>stan pośredni</b>: P nieaktualne po set</td><td>[2,1,3,4,5], set(2,5)</td><td>stale = true, potem 10</td><td class="ok">OK</td></tr>
+    <tr><td>T21</td><td>liczniki operacji</td><td>n = 64, macierz 3×3</td><td>64, 64, 1, 18+9, 1+2</td><td class="ok">OK</td></tr>
+    <tr><td>T22</td><td>losowe dane: prefiksy = bezpośrednio</td><td>500 zapytań 1D + 500 2D</td><td>true</td><td class="ok">OK</td></tr>
+    <tr><td>T23</td><td>wynik kroków = wynik funkcji</td><td>6 trybów</td><td>[8,8,10,16,16,13]</td><td class="ok">OK</td></tr>
+    <tr><td>T24</td><td>kroki zatrzymują się na błędzie</td><td>[2,1)</td><td>błąd, brak wyniku</td><td class="ok">OK</td></tr>
+  </table>
+  <p class="cap">Tabela 3. Zestaw testów (pełne wejścia i wyniki w zakładce „Testy” i w <span class="mono">tests/wyniki-testow.json</span>).</p>
+  <h2>Poprawione błędy</h2>
+  <p>Tryb „set + odbudowa” najpierw sprawdzał tylko indeks i nową wartość, a granice zapytania dopiero przy samym zapytaniu, którego w tym trybie nie walidowałem. Przy błędnym zakresie mógł więc policzyć bzdurę z undefined. Dodałem sprawdzenie zakresu przed zmianą danych (w 1D i 2D). Drugi błąd był czysto wizualny: na wykresie najwyższy słupek nachodził na legendę, więc zwiększyłem górny margines.</p>
+  <div class="ftr"><span>ASD1-M1-13 · Lukaš Radivilovič</span><span>Strona 9 z 10</span></div>
+</section>
+
+<!-- ===================== 10 ===================== -->
+<section class="page">
+  <div class="hdr"><span>ASD1-M1-13 · Sumy prefiksowe i zapytania na zakresach</span><span>Dokumentacja</span></div>
+  <h1>9. Podsumowanie i źródła</h1>
+  <h2>9.1. Wnioski</h2>
+  <p>Sumy prefiksowe działają tak, jak obiecuje teoria, ale porównanie pokazało, że „O(1) na zapytanie” to tylko połowa historii. Przy jednym zapytaniu budowa się nie zwraca. Przy 10 i więcej zapytaniach prefiksy wygrywały w każdym rozmiarze, a przy 100 zapytaniach dla n = 64 wykonały prawie 14 razy mniej operacji. Z kolei w macierzach z jedną zmianą i jednym zapytaniem przegrywały za każdym razem, bo set wymusza pełną odbudowę.</p>
+  <p>Najwięcej zrozumienia dały mi współczynniki ×k w zapytaniu 2D. Wzór z czterema polami łatwo zapamiętać, ale dopiero gdy widać, że lewy-górny róg ma po dwóch odejmowaniach −1, jasne jest, po co jest ostatnie dodawanie.</p>
+  <h2>9.2. Ograniczenia</h2>
+  <ul>
+    <li>Koszt mierzę liczbą dodawań i odejmowań, a nie czasem w milisekundach. Dla tak małych danych czas byłby zdominowany przez przeglądarkę.</li>
+    <li>set odbudowuje całe P, choć wystarczyłoby przeliczyć P[i+1..n]. To zgodne z kartą, ale nieoptymalne.</li>
+    <li>Rozmiary są ograniczone kartą (64 elementy, 10×10), więc wykres nie pokazuje zachowania dla dużych n.</li>
+  </ul>
+  <h2>9.3. Możliwości rozwoju</h2>
+  <p>Częściowa odbudowa po set, krok wstecz w odtwarzaczu, tryb „wiele zmian i zapytań na zmianę” z wykresem punktu opłacalności. Struktury do częstych zmian (drzewo Fenwicka, drzewo przedziałowe) karta celowo wyklucza, więc mogłyby być osobnym projektem.</p>
+  <h2>9.4. Źródła</h2>
+  <ol>
+    <li>USACO Guide, „Introduction to Prefix Sums”, https://usaco.guide/silver/prefix-sums (dostęp 26.10.2026).</li>
+    <li>A. Laaksonen, <i>Competitive Programmer's Handbook</i>, rozdz. 9.1 „Sum queries”.</li>
+    <li>Karta tematu ASD1-M1-13, Dziennik UwB, 2026.</li>
+    <li>MDN Web Docs: generatory (<span class="mono">function*</span>), CSS Grid, SVG.</li>
+  </ol>
+  <h2>9.5. Wykorzystanie AI i sposób kontroli</h2>
+  <p>Jako narzędzia pomocniczego używałem asystenta AI Claude (Anthropic) w aplikacji Hermes: przy pisaniu i poprawianiu fragmentów kodu, redakcji tekstów oraz składaniu slajdów. Własny wkład: koncepcja aplikacji i sposobu wizualizacji (współczynniki ×k, pole „Przewidź”), definicja liczników i warunków porównania, dobór przypadków testowych, sprawdzenie algorytmów na przykładzie z karty i na danych liczonych ręcznie, dopracowanie wyglądu aplikacji i materiałów, korekta tekstów (m.in. ujednolicenie nazwy „metoda bezpośrednia”) oraz przygotowanie obrony.</p>
+  <p>Kod sprawdzałem tak: (1) wartości oczekiwane w testach pochodzą z przykładu kontrolnego karty albo z obliczeń ręcznych, a nie z wyniku programu; (2) test T22 porównuje prefiksy z metodą bezpośrednią na 1000 losowych przypadkach; (3) T23 porównuje wynik wykonania krokowego z czystymi funkcjami; (4) zrzuty ekranu z każdego trybu porównałem z wartościami policzonymi ręcznie, m.in. przykład z karty: P = [0, 2, 3, 6, 10, 15], sumy 8 i 10, prostokąt 16. Wszystkie liczby w tej dokumentacji pochodzą z uruchomienia aplikacji i testów.</p>
+  <div class="ftr"><span>ASD1-M1-13 · Lukaš Radivilovič</span><span>Strona 10 z 10</span></div>
+</section>
+</body>
+</html>
