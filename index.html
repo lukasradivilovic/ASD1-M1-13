@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PrefiksLab — ASD1-M1-13 Sumy prefiksowe i zapytania na zakresach</title>
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>PrefiksLab</h1>
+    <p class="sub">ASD1-M1-13 · Sumy prefiksowe i zapytania na zakresach · Lukaš Radivilovič (93795)</p>
+  </div>
+  <nav id="tabs" role="tablist">
+    <button data-tab="theory">Teoria</button>
+    <button data-tab="lab1" class="on">Laboratorium 1D</button>
+    <button data-tab="lab2">Laboratorium 2D</button>
+    <button data-tab="compare">Porównanie kosztu</button>
+    <button data-tab="quiz">Pytania</button>
+    <button data-tab="tests">Testy</button>
+  </nav>
+</header>
+
+<main>
+<!-- ================= TEORIA ================= -->
+<section id="tab-theory" class="tab">
+  <h2>O co chodzi w tym laboratorium</h2>
+  <p>Mamy tablicę (albo macierz) i dużo pytań w rodzaju „ile wynosi suma elementów od l do r”. Można za każdym razem dodawać elementy po kolei. Można też raz policzyć sumy prefiksowe i potem odpowiadać jednym odejmowaniem. Laboratorium pokazuje obie drogi krok po kroku i liczy, ile dodawań i odejmowań każda z nich naprawdę wykonuje.</p>
+  <p class="conv"><b>Umowa w całej aplikacji:</b> indeksy od 0. Zakres [l, r) zawiera l, ale <u>nie zawiera</u> r. Pusty zakres (l = r) ma sumę 0. Prostokąt [r1, r2) × [c1, c2) to wiersze r1…r2−1 i kolumny c1…c2−1. Wartości −20…20, tablica do 64 elementów, macierz od 1×1 do 10×10.</p>
+  <div class="cards">
+    <article class="card">
+      <h3>1. Sumowanie bez przygotowania</h3>
+      <p><b>Cel:</b> punkt odniesienia (w podręcznikach: algorytm naiwny); wynik, któremu ufamy, bo nie korzysta z żadnych struktur pomocniczych.</p>
+      <p><b>Działanie:</b> s = 0, potem dla każdego i z [l, r) wykonuję s = s + A[i]. W 2D to samo, tylko dwie pętle po wierszach i kolumnach prostokąta.</p>
+      <p><b>Zastosowania:</b> mało zapytań, dane zmieniają się bardzo często, albo chcemy sprawdzić inną metodę.</p>
+      <p><b>Ograniczenia:</b> każde zapytanie kosztuje tyle, ile ma elementów: O(r − l), w 2D O(liczba pól). Przy wielu zapytaniach o długie zakresy robi się wolno.</p>
+      <p class="cost">Czas: O(n) na zapytanie · Pamięć dodatkowa: O(1) · set: O(1)</p>
+    </article>
+    <article class="card">
+      <h3>2. Sumy prefiksowe 1D</h3>
+      <p><b>Cel:</b> odpowiadać na dowolne zapytanie o sumę zakresu w stałym czasie.</p>
+      <p><b>Działanie:</b> P[0] = 0 i P[i+1] = P[i] + A[i]. P[k] to suma pierwszych k elementów. Wtedy suma [l, r) = P[r] − P[l], bo z sumy pierwszych r elementów usuwam pierwsze l.</p>
+      <p><b>Zastosowania:</b> wiele zapytań na danych, które się nie zmieniają (statystyki w przedziałach czasu, średnie w oknie, liczenie wystąpień).</p>
+      <p><b>Ograniczenia:</b> trzeba zapłacić budowę (n dodawań) i pamięć n+1 liczb. Działa dla operacji odwracalnych (suma, XOR), nie dla minimum czy maksimum.</p>
+      <p class="cost">Budowa: O(n) · Zapytanie: O(1) · Pamięć: n+1</p>
+    </article>
+    <article class="card">
+      <h3>3. Sumy prefiksowe 2D</h3>
+      <p><b>Cel:</b> suma dowolnego prostokąta macierzy w stałym czasie.</p>
+      <p><b>Działanie:</b> P ma dodatkowy zerowy wiersz i kolumnę. P[i][j] to suma prostokąta [0, i) × [0, j). Budowa: P[i+1][j+1] = M[i][j] + P[i][j+1] + P[i+1][j] − P[i][j]. Zapytanie: P[r2][c2] − P[r1][c2] − P[r2][c1] + P[r1][c1]. Lewy-górny róg jest w obu odejmowanych pasach, więc odjęty dwa razy; dodaję go raz z powrotem.</p>
+      <p><b>Zastosowania:</b> obrazy (suma jasności w oknie), mapy i siatki, gry planszowe.</p>
+      <p><b>Ograniczenia:</b> pamięć (R+1)(C+1) i budowa 3 operacje na pole; po każdej zmianie trzeba to powtórzyć.</p>
+      <p class="cost">Budowa: O(R·C) · Zapytanie: O(1) · Pamięć: (R+1)(C+1)</p>
+    </article>
+    <article class="card">
+      <h3>4. Zmiana danych: set</h3>
+      <p><b>Cel:</b> pozwolić zmieniać dane i dalej dostawać poprawne sumy.</p>
+      <p><b>Działanie:</b> set(i, x) zastępuje A[i] wartością x. Wszystkie P[k] dla k &gt; i zawierają starą wartość, więc są nieaktualne. Aplikacja od razu odbudowuje całe P i dopiero potem odpowiada na zapytania. W 2D nieaktualne są wszystkie P[a][b] z a &gt; i oraz b &gt; j.</p>
+      <p><b>Zastosowania:</b> rzadkie zmiany przeplatane wieloma zapytaniami.</p>
+      <p><b>Ograniczenia:</b> jedna zmiana kosztuje tyle co cała budowa, O(n) lub O(R·C). Gdy zmian jest dużo, prefiksy się nie opłacają (tu potrzebne byłyby inne struktury, których ten temat celowo nie obejmuje).</p>
+      <p class="cost">set + odbudowa: O(n) / O(R·C)</p>
+    </article>
+  </div>
+  <p class="src">Źródło do nauki: <a href="https://usaco.guide/silver/prefix-sums" target="_blank" rel="noopener">USACO Guide — Introduction to Prefix Sums</a> (tam indeksy od 1; tutaj zgodnie z kartą od 0 i zakresy półotwarte).</p>
+</section>
+
+<!-- ================= LAB 1D ================= -->
+<section id="tab-lab1" class="tab on">
+  <div class="lab">
+    <aside class="panel">
+      <h3>Dane</h3>
+      <label>Gotowy scenariusz
+        <select id="sc1"></select></label>
+      <label>Tablica A <small>(liczby −20…20, najwyżej 64, oddzielone spacją lub przecinkiem)</small>
+        <input id="arr1" type="text" spellcheck="false"></label>
+      <div class="row"><button id="apply1">Zastosuj</button><button id="rand1">Losuj (n = 8)</button></div>
+      <h3>Metoda</h3>
+      <select id="mode1">
+        <option value="naive1d">Sumowanie bez przygotowania</option>
+        <option value="prefix1d">Sumy prefiksowe: budowa + zapytanie</option>
+        <option value="set1d">set(i, x) + odbudowa + zapytanie</option>
+      </select>
+      <h3>Zapytanie [l, r)</h3>
+      <div class="row">
+        <label>l <small>(włącznie)</small><input id="l1" type="number" step="1"></label>
+        <label>r <small>(wyłącznie)</small><input id="r1" type="number" step="1"></label>
+      </div>
+      <div id="setbox1" class="row">
+        <label>i <small>(indeks)</small><input id="i1" type="number" step="1"></label>
+        <label>x <small>(nowa wartość)</small><input id="x1" type="number" step="1"></label>
+      </div>
+      <div id="msg1" class="msg" role="alert"></div>
+    </aside>
+    <div class="work">
+      <div class="controls" data-player="p1">
+        <button data-act="step" title="Wykonaj jedną instrukcję">Krok ▸</button>
+        <button data-act="play">Start ▶</button>
+        <button data-act="reset">Reset ↺</button>
+        <label class="speed">Tempo <input data-act="speed" type="range" min="1" max="10" value="5"> <span data-out="speed"></span></label>
+        <span class="status" data-out="status"></span>
+      </div>
+      <div id="viz1" class="viz"></div>
+      <div class="reason" id="reason1"></div>
+      <div class="twocol">
+        <div><h4>Pseudokod</h4><ol class="code" id="code1"></ol></div>
+        <div><h4>Zmienne i liczniki</h4><table class="vars" id="vars1"></table></div>
+      </div>
+      <div class="predict" id="pred1"></div>
+      <div class="legend">
+        <b>Legenda:</b>
+        <span class="lg in-range">[ ] w zakresie</span>
+        <span class="lg active">+ dodawany</span>
+        <span class="lg read">+ odczyt</span>
+        <span class="lg write">= zapis</span>
+        <span class="lg use">± pole użyte w zapytaniu</span>
+        <span class="lg stale">✗ nieaktualne</span>
+        <span class="lg changed">✎ zmienione</span>
+        <span class="lg nullc">? jeszcze nie policzone</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LAB 2D ================= -->
+<section id="tab-lab2" class="tab">
+  <div class="lab">
+    <aside class="panel">
+      <h3>Dane</h3>
+      <label>Gotowy scenariusz
+        <select id="sc2"></select></label>
+      <label>Macierz M <small>(jeden wiersz w linii, 1–10 wierszy i kolumn, −20…20)</small>
+        <textarea id="mat2" rows="5" spellcheck="false"></textarea></label>
+      <div class="row"><button id="apply2">Zastosuj</button><button id="rand2">Losuj (4×5)</button></div>
+      <h3>Metoda</h3>
+      <select id="mode2">
+        <option value="naive2d">Sumowanie bez przygotowania</option>
+        <option value="prefix2d">Sumy prefiksowe 2D: budowa + zapytanie</option>
+        <option value="set2d">set(i, j, x) + odbudowa + zapytanie</option>
+      </select>
+      <h3>Prostokąt [r1, r2) × [c1, c2)</h3>
+      <div class="row">
+        <label>r1 <small>(wł.)</small><input id="r1_2" type="number" step="1"></label>
+        <label>r2 <small>(wył.)</small><input id="r2_2" type="number" step="1"></label>
+      </div>
+      <div class="row">
+        <label>c1 <small>(wł.)</small><input id="c1_2" type="number" step="1"></label>
+        <label>c2 <small>(wył.)</small><input id="c2_2" type="number" step="1"></label>
+      </div>
+      <div id="setbox2" class="row">
+        <label>i<input id="i2" type="number" step="1"></label>
+        <label>j<input id="j2" type="number" step="1"></label>
+        <label>x<input id="x2" type="number" step="1"></label>
+      </div>
+      <div id="msg2" class="msg" role="alert"></div>
+    </aside>
+    <div class="work">
+      <div class="controls" data-player="p2">
+        <button data-act="step">Krok ▸</button>
+        <button data-act="play">Start ▶</button>
+        <button data-act="reset">Reset ↺</button>
+        <label class="speed">Tempo <input data-act="speed" type="range" min="1" max="10" value="5"> <span data-out="speed"></span></label>
+        <span class="status" data-out="status"></span>
+      </div>
+      <div id="viz2" class="viz"></div>
+      <div class="reason" id="reason2"></div>
+      <div class="twocol">
+        <div><h4>Pseudokod</h4><ol class="code" id="code2"></ol></div>
+        <div><h4>Zmienne i liczniki</h4><table class="vars" id="vars2"></table></div>
+      </div>
+      <div class="predict" id="pred2"></div>
+      <div class="legend">
+        <b>Legenda:</b>
+        <span class="lg in-range">[ ] w prostokącie</span>
+        <span class="lg active">+ dodawany</span>
+        <span class="lg read">+ odczyt</span>
+        <span class="lg minus">− odejmowany</span>
+        <span class="lg write">= zapis</span>
+        <span class="lg use">+ pole użyte w zapytaniu</span>
+        <span class="lg stale">✗ nieaktualne</span>
+        <span class="lg changed">✎ zmienione</span>
+        <span class="lg coefl">×k ile razy pole jest wliczone</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PORÓWNANIE ================= -->
+<section id="tab-compare" class="tab">
+  <h2>Porównanie kosztu</h2>
+  <div class="defs">
+    <p><b>Liczniki.</b> <i>add</i> to liczba wykonanych dodawań, <i>sub</i> liczba odejmowań w badanym algorytmie. Koszt = add + sub. Nie liczę porównań w pętli, walidacji, losowania danych, kopiowania tablic ani niczego związanego z animacją i historią klatek. To osobny kod.</p>
+    <p><b>Rozmiar wejścia.</b> n to długość tablicy, q liczba zapytań, R×C wymiar macierzy.</p>
+    <p><b>Wzory.</b> Metoda bezpośrednia: suma długości zapytań (najgorzej q·n). Prefiksy: budowa n, każde zapytanie 1. W 2D budowa 3·R·C (2 dodawania + 1 odejmowanie na pole), zapytanie 3, każdy set to ponowna budowa.</p>
+    <p><b>Pamięć dodatkowa.</b> Metoda bezpośrednia: 1 zmienna (s). Prefiksy 1D: n+1 liczb, 2D: (R+1)(C+1).</p>
+  </div>
+  <div class="row cmpctl">
+    <label>Ziarno losowania <input id="seed" type="number" value="2026"></label>
+    <label class="chk"><input id="worst" type="checkbox"> zapytania o całą tablicę (najgorszy przypadek)</label>
+    <button id="runCmp">Uruchom porównanie</button>
+  </div>
+  <h3>Tablice: n = 8, 32, 64 i q = 1, 10, 100 tych samych zapytań</h3>
+  <table class="grid" id="cmp1"></table>
+  <div id="chart1" class="chart"></div>
+  <h3>Macierze 3×3, 6×6, 10×10: budowa, jedna zmiana set i jedno zapytanie</h3>
+  <table class="grid" id="cmp2"></table>
+  <h3>Własny eksperyment na tablicy z Laboratorium 1D</h3>
+  <div class="row"><label>q (liczba losowych zapytań) <input id="ownQ" type="number" min="1" max="1000" value="20"></label><button id="runOwn">Policz</button></div>
+  <table class="grid" id="cmpOwn"></table>
+  <div class="concl" id="concl"></div>
+</section>
+
+<!-- ================= PYTANIA ================= -->
+<section id="tab-quiz" class="tab">
+  <h2>Sprawdź się</h2>
+  <p>Pytania 2 i 3 są liczone z aktualnych danych w laboratoriach. Zmień tablicę lub macierz i wróć tutaj, a pytanie się zmieni.</p>
+  <div id="quiz"></div>
+</section>
+
+<!-- ================= TESTY ================= -->
+<section id="tab-tests" class="tab">
+  <h2>Testy automatyczne</h2>
+  <p>Te same przypadki uruchamia polecenie <code>node tests/run-tests.js</code>. Tutaj wykonują się w przeglądarce na kodzie, którego używa laboratorium.</p>
+  <div class="row"><button id="runTests">Uruchom testy</button><span id="testSummary" class="status"></span></div>
+  <table class="grid tests" id="testTable"></table>
+</section>
+</main>
+
+<script src="src/algorithms.js"></script>
+<script src="src/steps.js"></script>
+<script src="src/compare.js"></script>
+<script src="tests/test-cases.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>
