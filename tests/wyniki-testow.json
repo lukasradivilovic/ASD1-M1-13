@@ -1,0 +1,223 @@
+{
+  "date": "2026-10-26T20:00:20.872Z",
+  "passed": 24,
+  "total": 24,
+  "results": [
+    {
+      "id": "T01",
+      "group": "Prefiks 1D",
+      "name": "Przykład kontrolny: budowa P",
+      "input": "A = [2,1,3,4,5]",
+      "expected": "[0,2,3,6,10,15]",
+      "got": "[0,2,3,6,10,15]",
+      "status": "OK"
+    },
+    {
+      "id": "T02",
+      "group": "Prefiks 1D + bezpośrednia",
+      "name": "Przykład kontrolny: sum(1,4) obiema metodami",
+      "input": "A = [2,1,3,4,5], [1,4)",
+      "expected": "{\"bezposrednia\":8,\"prefiks\":8}",
+      "got": "{\"bezposrednia\":8,\"prefiks\":8}",
+      "status": "OK"
+    },
+    {
+      "id": "T03",
+      "group": "set 1D",
+      "name": "Przykład kontrolny: set(2,5), potem sum(1,4)",
+      "input": "A = [2,1,3,4,5]; set(2,5); sum(1,4)",
+      "expected": "{\"P\":[0,2,3,8,12,17],\"suma\":10}",
+      "got": "{\"P\":[0,2,3,8,12,17],\"suma\":10}",
+      "status": "OK"
+    },
+    {
+      "id": "T04",
+      "group": "Prefiks 2D + bezpośrednia",
+      "name": "Przykład kontrolny: prostokąt [0,2)×[1,3)",
+      "input": "M = [[1,2,3],[4,5,6]]",
+      "expected": "{\"bezposrednia\":16,\"prefiks\":16}",
+      "got": "{\"bezposrednia\":16,\"prefiks\":16}",
+      "status": "OK"
+    },
+    {
+      "id": "T05",
+      "group": "Prefiks 2D",
+      "name": "Macierz P dla przykładu kontrolnego",
+      "input": "M = [[1,2,3],[4,5,6]]",
+      "expected": "[[0,0,0,0],[0,1,3,6],[0,5,12,21]]",
+      "got": "[[0,0,0,0],[0,1,3,6],[0,5,12,21]]",
+      "status": "OK"
+    },
+    {
+      "id": "T06",
+      "group": "Brzegowe 1D",
+      "name": "Pusta tablica",
+      "input": "A = [], sum(0,0)",
+      "expected": "{\"P\":[0],\"bezposrednia\":0,\"prefiks\":0}",
+      "got": "{\"P\":[0],\"bezposrednia\":0,\"prefiks\":0}",
+      "status": "OK"
+    },
+    {
+      "id": "T07",
+      "group": "Brzegowe 1D",
+      "name": "Pusty zakres i cała tablica",
+      "input": "A = [2,1,3,4,5]; [3,3) i [0,5)",
+      "expected": "{\"pusty\":0,\"cala\":15,\"bezpCala\":15}",
+      "got": "{\"pusty\":0,\"cala\":15,\"bezpCala\":15}",
+      "status": "OK"
+    },
+    {
+      "id": "T08",
+      "group": "Brzegowe 1D",
+      "name": "Liczby ujemne i suma równa zero",
+      "input": "A = [-5,5,-20,20,-1]; [0,4), [0,3), [1,3)",
+      "expected": "[0,-20,-15]",
+      "got": "[0,-20,-15]",
+      "status": "OK"
+    },
+    {
+      "id": "T09",
+      "group": "set 1D",
+      "name": "Zmiana pierwszego i ostatniego elementu",
+      "input": "A = [1,2,3,4]; set(0,-20); set(3,20); sum(0,4), sum(0,1), sum(3,4)",
+      "expected": "{\"P\":[0,-20,-18,-15,5],\"sumy\":[5,-20,20]}",
+      "got": "{\"P\":[0,-20,-18,-15,5],\"sumy\":[5,-20,20]}",
+      "status": "OK"
+    },
+    {
+      "id": "T10",
+      "group": "Brzegowe 2D",
+      "name": "Macierz 1×1 oraz pusty prostokąt",
+      "input": "M = [[7]]; [0,1)×[0,1) i [0,0)×[0,1)",
+      "expected": "{\"caly\":7,\"pusty\":0,\"bezpPusty\":0}",
+      "got": "{\"caly\":7,\"pusty\":0,\"bezpPusty\":0}",
+      "status": "OK"
+    },
+    {
+      "id": "T11",
+      "group": "Brzegowe 2D",
+      "name": "Pojedynczy wiersz i cały prostokąt",
+      "input": "M = [[1,-2,3,-4]]; [0,1)×[1,3) i cała macierz",
+      "expected": "{\"srodek\":1,\"cala\":-2}",
+      "got": "{\"srodek\":1,\"cala\":-2}",
+      "status": "OK"
+    },
+    {
+      "id": "T12",
+      "group": "set 2D",
+      "name": "Zmiana rogów macierzy i odbudowa P",
+      "input": "M = [[1,2],[3,4]]; set(0,0,10); set(1,1,-4); cała macierz, [1,2)×[1,2)",
+      "expected": "{\"cala\":11,\"rog\":-4,\"bezposrednia\":11}",
+      "got": "{\"cala\":11,\"rog\":-4,\"bezposrednia\":11}",
+      "status": "OK"
+    },
+    {
+      "id": "T13",
+      "group": "Walidacja",
+      "name": "Błędne granice 1D",
+      "input": "n = 5: [3,1), [-1,2), [0,6), [1.5,3)",
+      "expected": "[\"ValidationError\",\"ValidationError\",\"ValidationError\",\"ValidationError\"]",
+      "got": "[\"ValidationError\",\"ValidationError\",\"ValidationError\",\"ValidationError\"]",
+      "status": "OK"
+    },
+    {
+      "id": "T14",
+      "group": "Walidacja",
+      "name": "Błędne granice 2D i metoda bezpośrednia",
+      "input": "M 2×3: [1,0)×[0,1), [0,3)×[0,1), [0,1)×[2,1); bezpośrednia [0,1)×[0,4)",
+      "expected": "[\"ValidationError\",\"ValidationError\",\"ValidationError\",\"ValidationError\"]",
+      "got": "[\"ValidationError\",\"ValidationError\",\"ValidationError\",\"ValidationError\"]",
+      "status": "OK"
+    },
+    {
+      "id": "T15",
+      "group": "Walidacja",
+      "name": "Błędne dane i set",
+      "input": "wartość 21, długość 65, 11 wierszy, wiersze nierówne, set(5,…) dla n=5, set(0,-21)",
+      "expected": "[\"ValidationError\",\"ValidationError\",\"ValidationError\",\"ValidationError\",\"ValidationError\",\"ValidationError\"]",
+      "got": "[\"ValidationError\",\"ValidationError\",\"ValidationError\",\"ValidationError\",\"ValidationError\",\"ValidationError\"]",
+      "status": "OK"
+    },
+    {
+      "id": "T16",
+      "group": "Walidacja",
+      "name": "Odrzucona zmiana nie psuje danych",
+      "input": "A = [1,2,3]; set(3,9) (błąd); sum(0,3)",
+      "expected": "{\"blad\":\"ValidationError\",\"suma\":6}",
+      "got": "{\"blad\":\"ValidationError\",\"suma\":6}",
+      "status": "OK"
+    },
+    {
+      "id": "T17",
+      "group": "Stan pośredni 1D",
+      "name": "Budowa P po 3 krokach pętli",
+      "input": "A = [2,1,3,4,5], migawka po zapisaniu P[3]",
+      "expected": "[0,2,3,6,null,null]",
+      "got": "[0,2,3,6,null,null]",
+      "status": "OK"
+    },
+    {
+      "id": "T18",
+      "group": "Stan pośredni 2D",
+      "name": "Budowa P po pierwszym wierszu",
+      "input": "M = [[1,2,3],[4,5,6]], migawka po P[1][3]",
+      "expected": "[[0,0,0,0],[0,1,3,6],[0,null,null,null]]",
+      "got": "[[0,0,0,0],[0,1,3,6],[0,null,null,null]]",
+      "status": "OK"
+    },
+    {
+      "id": "T19",
+      "group": "Stan pośredni 2D",
+      "name": "Współczynniki pól po dwóch odejmowaniach",
+      "input": "M 3×3 zer, prostokąt [1,3)×[1,3); migawka po −P[r2][c1]",
+      "expected": "{\"coef\":[[-1,0,0],[0,1,1],[0,1,1]],\"posrednia\":0}",
+      "got": "{\"coef\":[[-1,0,0],[0,1,1],[0,1,1]],\"posrednia\":0}",
+      "status": "OK"
+    },
+    {
+      "id": "T20",
+      "group": "Stan pośredni set",
+      "name": "Po set P jest oznaczone jako nieaktualne, potem odbudowane",
+      "input": "A = [2,1,3,4,5]; set(2,5); sum(1,4)",
+      "expected": "{\"nieaktualne\":true,\"poOdbudowie\":false,\"wynik\":10}",
+      "got": "{\"nieaktualne\":true,\"poOdbudowie\":false,\"wynik\":10}",
+      "status": "OK"
+    },
+    {
+      "id": "T21",
+      "group": "Liczniki",
+      "name": "Liczba dodawań i odejmowań",
+      "input": "n = 64: bezpośrednia [0,64), budowa, zapytanie; macierz 3×3: budowa, zapytanie",
+      "expected": "{\"bezposrednia\":64,\"budowa1D\":64,\"zapytanie1D\":1,\"budowa2D\":{\"add\":18,\"sub\":9},\"zapytanie2D\":{\"add\":1,\"sub\":2}}",
+      "got": "{\"bezposrednia\":64,\"budowa1D\":64,\"zapytanie1D\":1,\"budowa2D\":{\"add\":18,\"sub\":9},\"zapytanie2D\":{\"add\":1,\"sub\":2}}",
+      "status": "OK"
+    },
+    {
+      "id": "T22",
+      "group": "Zgodność",
+      "name": "Losowe dane: prefiksy = metoda bezpośrednia (500 zapytań 1D, 500 2D)",
+      "input": "ziarno 7, n ∈ 0…64, macierze do 10×10",
+      "expected": "true",
+      "got": "true",
+      "status": "OK"
+    },
+    {
+      "id": "T23",
+      "group": "Zgodność",
+      "name": "Wynik wykonania krokowego = wynik funkcji",
+      "input": "przykład kontrolny, wszystkie 6 trybów",
+      "expected": "[8,8,10,16,16,13]",
+      "got": "[8,8,10,16,16,13]",
+      "status": "OK"
+    },
+    {
+      "id": "T24",
+      "group": "Walidacja",
+      "name": "Wykonanie krokowe zatrzymuje się na błędnym zakresie",
+      "input": "A = [1,2,3], zapytanie [2,1)",
+      "expected": "{\"blad\":true,\"wynik\":null}",
+      "got": "{\"blad\":true,\"wynik\":null}",
+      "status": "OK"
+    }
+  ]
+}
